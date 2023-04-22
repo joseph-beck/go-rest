@@ -3,6 +3,7 @@
 build:
 
 run:
+	@bash scripts/run.sh
 
 dev:
 	@bash scripts/dev.sh

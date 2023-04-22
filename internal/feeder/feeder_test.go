@@ -8,7 +8,7 @@ func TestAdd(t *testing.T) {
 
 	if len(feed.Items) != 1 {
 		t.Errorf("Failure adding item")
-	} 
+	}
 }
 
 func TestGetAll(t *testing.T) {
