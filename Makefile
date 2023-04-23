@@ -9,5 +9,4 @@ dev:
 	@bash scripts/dev.sh
 
 test:
-	@go mod tidy
-	@go test -cover ./test/...
+	@go test -cover ./...

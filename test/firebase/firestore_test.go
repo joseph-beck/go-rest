@@ -1,40 +1,26 @@
 package firebase
 
 import (
-	"context"
-	"log"
 	"os"
 	"reflect"
 	fs "rest/pkg/firebase/firestore"
 	"testing"
 
 	"cloud.google.com/go/firestore"
-	firebase "firebase.google.com/go"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/api/iterator"
 	"gopkg.in/oauth2.v3"
 	"gopkg.in/oauth2.v3/models"
 )
 
+const conf = "../../conf/service-acc.json"
+
 var c *firestore.Client
 
 func TestMain(m *testing.M) {
-	project, ok := os.LookupEnv("PROJECT_ID")
-	if !ok {
-		log.Fatalln("PROJECT_ID env variable is missing")
-	}
-	ctx := context.Background()
-	conf := &firebase.Config{ProjectID: project}
-	app, err := firebase.NewApp(ctx, conf)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	c, err = app.Firestore(ctx)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	c = fs.Conn(conf)
 	os.Exit(func() int {
-		defer c.Close()
+		c.Close()
 		return m.Run()
 	}())
 }
