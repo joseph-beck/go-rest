@@ -8,5 +8,6 @@ run:
 dev:
 	@bash scripts/dev.sh
 
-test: 
+test:
+	@go mod tidy
 	@go test -cover ./test/...
