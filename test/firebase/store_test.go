@@ -45,7 +45,7 @@ func TestReadInto(t *testing.T) {
 	defer s.Close()
 	ctx := context.Background()
 
-	err, docs := s.ReadInto(ctx)
+	docs, err := s.ReadInto(ctx)
 	if err != nil {
 		log.Fatalln(err)
 	}

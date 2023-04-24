@@ -9,6 +9,24 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+type StoreAdder interface {
+	Add() error
+	AddStruct() error
+}
+
+type StoreReader interface {
+	Read() error
+	ReadInto() error
+}
+
+type StoreDeleter interface {
+	Delete() error
+}
+
+type StoreUpdater interface {
+	Update() error
+}
+
 type Store struct {
 	ClientMu   sync.Mutex
 	Client     firestore.Client
