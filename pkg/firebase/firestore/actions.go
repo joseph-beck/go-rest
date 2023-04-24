@@ -8,20 +8,42 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-func Add(c *firestore.Client, co string, ctx context.Context) error {
-	_, _, err := c.Collection(co).Add(ctx, map[string]interface{}{
+func (s *Store) Add(ctx context.Context) error {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
+	_, _, err := s.Client.Collection(s.Collection).Add(ctx, map[string]interface{}{
 		"name": "dave",
 		"data": "about david",
 	})
 	return err
 }
 
-func Delete(c *firestore.Client, co string, id string, ctx context.Context) error {
+func (s *Store) AddStruct(st interface{}, ctx context.Context) error {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
+	m, err := MapStruct(st)
+	if err != nil {
+		return err
+	}
+
+	_, _, err = s.Client.Collection(s.Collection).Add(ctx, m)
+	return err
+}
+
+func (s *Store) Delete(c *firestore.Client, co string, id string, ctx context.Context) error {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
 	return nil
 }
 
-func Read(c *firestore.Client, co string, ctx context.Context) error {
-	iter := c.Collection(co).Documents(ctx)
+func (s *Store) Read(ctx context.Context) error {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
+	iter := s.Client.Collection(s.Collection).Documents(ctx)
 	for {
 		doc, err := iter.Next()
 		if err == iterator.Done {
@@ -35,8 +57,11 @@ func Read(c *firestore.Client, co string, ctx context.Context) error {
 	return nil
 }
 
-func ReadInto(c *firestore.Client, co string, ctx context.Context) (error, []firestore.DocumentSnapshot) {
-	iter := c.Collection(co).Documents(ctx)
+func (s *Store) ReadInto(ctx context.Context) ([]firestore.DocumentSnapshot, error) {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
+	iter := s.Client.Collection(s.Collection).Documents(ctx)
 	docs := []firestore.DocumentSnapshot{}
 	for {
 		doc, err := iter.Next()
@@ -44,9 +69,9 @@ func ReadInto(c *firestore.Client, co string, ctx context.Context) (error, []fir
 			break
 		}
 		if err != nil {
-			return err, nil
+			return nil, err
 		}
 		docs = append(docs, *doc)
 	}
-	return nil, docs
+	return docs, nil
 }

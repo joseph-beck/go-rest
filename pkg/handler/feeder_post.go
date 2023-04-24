@@ -12,7 +12,6 @@ type feederPost struct {
 	Data string `json:"data"`
 }
 
-
 func FeederPost(feed feeder.Adder) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := feederPost{}

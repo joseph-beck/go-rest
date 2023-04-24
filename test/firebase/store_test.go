@@ -3,7 +3,9 @@ package firebase
 import (
 	"context"
 	"log"
+	"rest/internal/feeder"
 	fs "rest/pkg/firebase/firestore"
+
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -24,6 +26,22 @@ func TestAdd(t *testing.T) {
 
 	ctx := context.Background()
 	err := s.Add(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func TestAddStruct(t *testing.T) {
+	s = fs.NewStore(conf, "test")
+	defer s.Close()
+
+	u := feeder.Item{
+		Name: "davide",
+		Data: "something about davide",
+	}
+
+	ctx := context.Background()
+	err := s.AddStruct(u, ctx)
 	if err != nil {
 		log.Fatalln(err)
 	}
