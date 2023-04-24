@@ -17,7 +17,7 @@ type Store struct {
 
 func NewStore(path string, collection string) *Store {
 	return &Store{
-		Client: *newConn(path),
+		Client:     *newConn(path),
 		Collection: collection,
 	}
 }
