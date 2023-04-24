@@ -6,50 +6,48 @@ import (
 	fs "rest/pkg/firebase/firestore"
 	"testing"
 
-	"cloud.google.com/go/firestore"
+	"github.com/stretchr/testify/assert"
 )
 
 const conf = "../../conf/service-acc.json"
 
-var c *firestore.Client
+var s *fs.Store
 
 func TestConn(t *testing.T) {
-	c := fs.Conn(conf)
-	defer fs.Close(c)
+	s = fs.NewStore(conf, "test")
+	defer s.Close()
 }
 
 func TestAdd(t *testing.T) {
-	c = fs.Conn(conf)
-	defer fs.Close(c)
+	s = fs.NewStore(conf, "test")
+	defer s.Close()
 
 	ctx := context.Background()
-	err := fs.Add(c, "test", ctx)
+	err := s.Add(ctx)
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
 
 func TestRead(t *testing.T) {
-	c = fs.Conn(conf)
-	defer fs.Close(c)
+	s = fs.NewStore(conf, "test")
+	defer s.Close()
 
 	ctx := context.Background()
-	err := fs.Read(c, "test", ctx)
+	err := s.Read(ctx)
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
 
 func TestReadInto(t *testing.T) {
-	c = fs.Conn(conf)
-	defer fs.Close(c)
+	s = fs.NewStore(conf, "test")
+	defer s.Close()
 	ctx := context.Background()
 
-	err, docs := fs.ReadInto(c, "test", ctx)
+	err, docs := s.ReadInto(ctx)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	for doc := range docs {
-		log.Println(doc)
-	}
+	assert.NotNil(t, docs)
 }

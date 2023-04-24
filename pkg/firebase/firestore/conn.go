@@ -10,7 +10,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-func Conn(path string) *firestore.Client {
+func newConn(path string) *firestore.Client {
 	file, err := os.Open(path)
 	// if we os.Open returns an error then handle it
 	if err != nil {
@@ -32,8 +32,4 @@ func Conn(path string) *firestore.Client {
 		log.Fatalln(err)
 	}
 	return client
-}
-
-func Close(c *firestore.Client) {
-	defer c.Close()
 }

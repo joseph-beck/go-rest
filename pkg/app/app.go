@@ -23,6 +23,6 @@ func Run() {
 }
 
 func Fb() {
-	c := firestore.Conn(conf)
-	firestore.Close(c)
+	s := firestore.NewStore(conf, "user")
+	s.Close()
 }
