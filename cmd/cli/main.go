@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "rest/pkg/app"
 
+func main() {
+	app.Run()
 }

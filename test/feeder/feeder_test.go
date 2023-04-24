@@ -5,21 +5,24 @@ import (
 	"rest/internal/feeder"
 )
 
-func TestAdd(t *testing.T) {
-	feed := feeder.NewRepo()
-	feed.Add(feeder.Item{})
+const conf = "../../conf/service-acc.json"
 
-	if len(feed.Items) != 1 {
+func TestAdd(t *testing.T) {
+	feed := feeder.NewRepo(conf)
+	feed.Add(feeder.Item{})
+	feed.Update()
+
+	if len(feed.Items) <= 0 {
 		t.Errorf("Failure adding item")
 	}
 }
 
 func TestGetAll(t *testing.T) {
-	feed := feeder.NewRepo()
+	feed := feeder.NewRepo(conf)
 	feed.Add(feeder.Item{})
 	results := feed.GetAll()
 
-	if len(results) != 1 {
+	if len(results) <= 0 {
 		t.Errorf("Failure adding item")
 	}
 }

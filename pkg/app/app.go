@@ -11,7 +11,7 @@ import (
 const conf = "conf/service-acc.json"
 
 func Run() {
-	feed := feeder.NewRepo()
+	feed := feeder.NewRepo(conf)
 	r := gin.Default()
 
 	r.GET("/ping", handler.PingGet())

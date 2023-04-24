@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	//app.Run()
-	app.Fb()
+	app.Run()
+	//app.Fb()
 }
