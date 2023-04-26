@@ -32,13 +32,6 @@ func (s *Store) AddStruct(st interface{}, ctx context.Context) error {
 	return err
 }
 
-func (s *Store) Delete(c *firestore.Client, co string, id string, ctx context.Context) error {
-	s.ClientMu.Lock()
-	defer s.ClientMu.Unlock()
-
-	return nil
-}
-
 func (s *Store) Read(ctx context.Context) error {
 	s.ClientMu.Lock()
 	defer s.ClientMu.Unlock()
@@ -74,4 +67,50 @@ func (s *Store) ReadInto(ctx context.Context) ([]firestore.DocumentSnapshot, err
 		docs = append(docs, *doc)
 	}
 	return docs, nil
+}
+
+func (s *Store) Delete(id string, ctx context.Context) error {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
+	iter := s.Client.Collection(s.Collection).DocumentRefs(ctx)
+	for {
+		doc, err := iter.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		if doc.ID == id {
+			_, err := doc.Delete(ctx)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (s *Store) DeleteAll(ctx context.Context) error {
+	s.ClientMu.Lock()
+	defer s.ClientMu.Unlock()
+
+	iter := s.Client.Collection(s.Collection).DocumentRefs(ctx)
+	for {
+		doc, err := iter.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		_, err = doc.Delete(ctx)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

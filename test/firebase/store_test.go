@@ -69,3 +69,25 @@ func TestReadInto(t *testing.T) {
 	}
 	assert.NotNil(t, docs)
 }
+
+func TestDelete(t *testing.T) {
+	s = fs.NewStore(conf, "test")
+	defer s.Close()
+	ctx := context.Background()
+
+	err := s.Delete("d59qe7H7lfwy6HFuqIFN", ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
+// func TestDeleteAll(t *testing.T) {
+// 	s = fs.NewStore(conf, "test")
+// 	defer s.Close()
+// 	ctx := context.Background()
+
+// 	err := s.DeleteAll(ctx)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// }

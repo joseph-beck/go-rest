@@ -1,6 +1,7 @@
 package firestore
 
 import (
+	"context"
 	"sync"
 
 	"cloud.google.com/go/firestore"
@@ -11,24 +12,25 @@ type StoreCreator interface {
 }
 
 type StoreAdder interface {
-	Add() error
-	AddStruct() error
-	AddStructs() error
+	Add(ctx context.Context) error
+	AddStruct(st interface{}, ctx context.Context) error
+	AddStructs(st []interface{}, ctx context.Context) error
 }
 
 type StoreReader interface {
-	Read() error
-	ReadInto() error
-	ReadStruct() error
+	Read(ctx context.Context) error
+	ReadInto(ctx context.Context) ([]firestore.DocumentSnapshot, error)
+	ReadStruct(id string, ctx context.Context) (interface{}, error)
 }
 
 type StoreUpdater interface {
-	Update() error
-	UpdateStruct() error
+	Update(ctx context.Context) error
+	UpdateStruct(id string, u interface{}, ctx context.Context) error
 }
 
 type StoreDeleter interface {
-	Delete() error
+	Delete(id string, ctx context.Context) error
+	DeleteAll(ctx context.Context) error
 }
 
 type StoreCloser interface {
