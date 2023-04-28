@@ -8,6 +8,7 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+// generic add not actually useful
 func (s *Store) Add(ctx context.Context) error {
 	s.ClientMu.Lock()
 	defer s.ClientMu.Unlock()
@@ -19,6 +20,7 @@ func (s *Store) Add(ctx context.Context) error {
 	return err
 }
 
+// takes param of interface, this prefers struct with json
 func (s *Store) AddStruct(st interface{}, ctx context.Context) error {
 	s.ClientMu.Lock()
 	defer s.ClientMu.Unlock()
