@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 	"rest/internal/feeder"
-	fs "rest/pkg/firebase/firestore"
+	fs "rest/pkg/firestore"
 
 	"testing"
 

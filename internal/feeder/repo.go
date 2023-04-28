@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"log"
-	"rest/pkg/firebase/firestore"
+	"rest/pkg/firestore"
 )
 
 const (
@@ -21,6 +21,10 @@ type RepoAdder interface {
 
 type RepoUpdater interface {
 	Update()
+}
+
+type RepoDeleter interface {
+	Delete(id string)
 }
 
 type RepoManager interface {
@@ -73,4 +77,12 @@ func (r *Repo) Update() {
 		i = append(i, *item)
 	}
 	r.Items = i
+}
+
+func (r *Repo) Delete(id string) {
+	ctx := context.Background()
+	err := r.Store.Delete(id, ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }

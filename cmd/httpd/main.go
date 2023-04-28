@@ -1,7 +1,7 @@
 package main
 
 import (
-	"rest/pkg/app"
+	"rest/internal/app"
 )
 
 func main() {

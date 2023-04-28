@@ -1,6 +1,6 @@
 package main
 
-import "rest/pkg/app"
+import "rest/internal/app"
 
 func main() {
 	app.Run()

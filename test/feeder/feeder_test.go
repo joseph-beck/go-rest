@@ -1,28 +1,33 @@
 package feeder
 
 import (
-	"testing"
 	"rest/internal/feeder"
+	"testing"
 )
 
 const conf = "../../conf/service-acc.json"
 
 func TestAdd(t *testing.T) {
-	feed := feeder.NewRepo(conf)
-	feed.Add(feeder.Item{})
-	feed.Update()
+	f := feeder.NewRepo(conf)
+	f.Add(feeder.Item{})
+	f.Update()
 
-	if len(feed.Items) <= 0 {
+	if len(f.Items) <= 0 {
 		t.Errorf("Failure adding item")
 	}
 }
 
 func TestGetAll(t *testing.T) {
-	feed := feeder.NewRepo(conf)
-	feed.Add(feeder.Item{})
-	results := feed.GetAll()
+	f := feeder.NewRepo(conf)
+	f.Add(feeder.Item{})
+	results := f.GetAll()
 
 	if len(results) <= 0 {
 		t.Errorf("Failure adding item")
 	}
+}
+
+func TestDelete(t *testing.T) {
+	f := feeder.NewRepo(conf)
+	f.Delete("3bZTw7sbJCAvZI9yySfE")
 }

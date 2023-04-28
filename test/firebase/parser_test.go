@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"rest/pkg/firebase/firestore"
+	"rest/pkg/firestore"
 	"testing"
 )
 

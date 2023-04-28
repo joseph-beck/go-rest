@@ -2,8 +2,8 @@ package app
 
 import (
 	"rest/internal/feeder"
-	"rest/pkg/firebase/firestore"
-	"rest/pkg/handler"
+	"rest/internal/handler"
+	"rest/pkg/firestore"
 
 	"github.com/gin-gonic/gin"
 )
