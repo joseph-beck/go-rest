@@ -1,3 +1,10 @@
-import { getRepository } from "./api/rest";
+import { get } from "./api/rest";
 
-getRepository()
+let response = async () => {
+    let data = get();
+
+    data.then( (result) => {
+        console.log(result)
+    });
+};
+response();
