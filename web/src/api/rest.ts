@@ -1,15 +1,7 @@
-import './App.css'
+import fetch from 'node-fetch';
+import { Repository } from '../types/repository';
 
-type Item = {
-  name: string;
-  data: string;
-};
-
-type Repository = {
-  repository: Item[];
-};
-
-async function getRepository() {
+export async function getRepository() {
   try {
       const response = await fetch(
           'http://localhost:8080/feed',
@@ -25,7 +17,7 @@ async function getRepository() {
           throw new Error(`error, status: ${response.status}`);
       }
 
-      const result = (await response.json());
+      const result = (await response.json()) as Repository;
       console.log(JSON.stringify(result, null, 4));
   } catch (error) {
       if (error instanceof Error) {
@@ -36,16 +28,6 @@ async function getRepository() {
   }
 }
 
-function App() {
-  return (
-    <>
-      <div className="card">
-        <button onClick={ async () => { await getRepository(); } }>
-          test get 
-        </button>
-      </div>
-    </>
-  )
+export function print() {
+    console.log('hellope')
 }
-
-export default App
