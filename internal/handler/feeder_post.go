@@ -22,6 +22,7 @@ func FeederPost(feed feeder.RepoAdder) gin.HandlerFunc {
 			Data: requestBody.Data,
 		}
 		feed.Add(item)
+		
 
 		c.Status(http.StatusNoContent)
 	}

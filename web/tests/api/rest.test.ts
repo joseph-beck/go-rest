@@ -22,6 +22,6 @@ describe('Options tests', () => {
         let preSendLength: number = preSend!.length
         let postSendLength: number = postSend!.length
 
-        expect(preSendLength).greaterThan(postSendLength);
+        expect(postSendLength).greaterThan(preSendLength);
     });
 });

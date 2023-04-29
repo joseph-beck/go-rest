@@ -47,14 +47,11 @@ func NewRepo(path string) *Repo {
 
 func (r *Repo) Add(item Item) {
 	r.Items = append(r.Items, item)
+	ctx := context.Background()
+	r.Store.AddStruct(item, ctx)
 }
 
 func (r *Repo) GetAll() []Item {
-	r.Update()
-	return r.Items
-}
-
-func (r *Repo) Update() {
 	ctx := context.Background()
 	docs, err := r.Store.ReadInto(ctx)
 	if err != nil {
@@ -77,6 +74,11 @@ func (r *Repo) Update() {
 		i = append(i, *item)
 	}
 	r.Items = i
+	return r.Items
+}
+
+func (r *Repo) Update() {
+
 }
 
 func (r *Repo) Delete(id string) {
