@@ -18,6 +18,8 @@ func Run() {
 
 	r.GET("/feed", handler.FeederGet(feed))
 	r.POST("/feed", handler.FeederPost(feed))
+	r.PATCH("/feed", handler.FeederUpdate(feed))
+	r.DELETE("/feed", handler.FeederDelete(feed))
 
 	r.Run()
 }
