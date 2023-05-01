@@ -6,44 +6,37 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc gin.HandlerFunc
-}
-
-type Routes []Route
+type Routes []gin.RouteInfo
 
 var routes = Routes{
-	Route{
-		Name:        "Ping",
+	gin.RouteInfo{
 		Method:      "GET",
-		Pattern:     "/",
+		Path:        "/",
+		Handler:     "Ping",
 		HandlerFunc: handler.PingGet(),
 	},
-	Route{
-		Name:        "FeederGet",
+	gin.RouteInfo{
 		Method:      "GET",
-		Pattern:     "/feed",
+		Path:        "/feed",
+		Handler:     "GetFeed",
 		HandlerFunc: handler.FeederGet(nil),
 	},
-	Route{
-		Name:        "FeederPost",
+	gin.RouteInfo{
+		Method:      "PATCH",
+		Path:        "/feed",
+		Handler:     "UpdateFeed",
+		HandlerFunc: handler.FeederUpdate(nil),
+	},
+	gin.RouteInfo{
 		Method:      "POST",
-		Pattern:     "/feed",
+		Path:        "/feed",
+		Handler:     "FeederPost",
 		HandlerFunc: handler.FeederPost(nil),
 	},
-	Route{
-		Name:        "FeederDelete",
+	gin.RouteInfo{
 		Method:      "DELETE",
-		Pattern:     "/feed",
+		Path:        "/feed",
+		Handler:     "FeederDelete",
 		HandlerFunc: handler.FeederDelete(nil),
-	},
-	Route{
-		Name:        "FeederUpdate",
-		Method:      "PATCH",
-		Pattern:     "/feed",
-		HandlerFunc: handler.FeederUpdate(nil),
 	},
 }
