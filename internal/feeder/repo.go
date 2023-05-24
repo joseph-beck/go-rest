@@ -11,12 +11,12 @@ const (
 	collection = "feed"
 )
 
-type RepoGetter interface {
-	GetAll() []Item
-}
-
 type RepoAdder interface {
 	Add(item Item)
+}
+
+type RepoGetter interface {
+	GetAll() []Item
 }
 
 type RepoUpdater interface {
@@ -47,8 +47,12 @@ func NewRepo(path string) *Repo {
 
 func (r *Repo) Add(item Item) {
 	r.Items = append(r.Items, item)
+
 	ctx := context.Background()
-	r.Store.AddStruct(item, ctx)
+	err := r.Store.AddStruct(item, ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
 func (r *Repo) GetAll() []Item {
