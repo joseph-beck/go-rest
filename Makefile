@@ -17,4 +17,4 @@ test:
 
 deploy:
 	docker build --tag go-rest .
-	docker run -p 8080:8080 go-rest &
+	docker run -p 8080:8080 --rm go-rest &
