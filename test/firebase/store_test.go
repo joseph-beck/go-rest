@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const conf = "../../conf/service-acc.json"
+const conf = "../../configs/service-acc.json"
 
 var s *fs.Store
 

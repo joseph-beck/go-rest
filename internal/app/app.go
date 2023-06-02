@@ -1,6 +1,7 @@
 package app
 
 import (
+	"log"
 	"rest/internal/feeder"
 	"rest/internal/handler"
 	"rest/pkg/firestore"
@@ -8,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const conf = "conf/service-acc.json"
+const conf = "configs/service-acc.json"
 
 func Run() {
 	feed := feeder.NewRepo(conf)
@@ -26,5 +27,9 @@ func Run() {
 
 func Fb() {
 	s := firestore.NewStore(conf, "user")
-	s.Close()
+	err := s.Close()
+
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
